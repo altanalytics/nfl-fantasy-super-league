@@ -21,10 +21,21 @@ export default function LeagueInfo() {
   const [teams, setTeams] = useState([]);
   const [teamMap, setTeamMap] = useState({});
   const [selectedTeam, setSelectedTeam] = useState('ALL');
-  const [selectedWeek, setSelectedWeek] = useState('1');
-  const [selectedGameType, setSelectedGameType] = useState('all');
+  //const [selectedWeek, setSelectedWeek] = useState('1');
+  const [selectedGameType, setSelectedGameType] = useState('blacktop');
   const [scheduleData, setScheduleData] = useState([]);
   const [expandedGames, setExpandedGames] = useState<Record<string, boolean>>({});
+
+  const getDefaultWeek = () => {
+    const today = new Date();
+    const seasonStart = new Date(today.getFullYear(), 8, 9); // September is month 8 (0-based index)
+    const diffInMs = today.getTime() - seasonStart.getTime();
+    const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+    const week = diffInDays < 0 ? 1 : Math.min(12, 1 + Math.floor(diffInDays / 7));
+    return week.toString();
+  };
+
+const [selectedWeek, setSelectedWeek] = useState(getDefaultWeek());
 
   useEffect(() => {
     const fetchTeams = async () => {

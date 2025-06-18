@@ -21,7 +21,7 @@ const navItems = [
   { label: 'Home', path: '/' },
   { label: 'Standings', path: '/standings' },
   { label: 'Schedule', path: '/schedule' },
-  { label: 'Live Scoring', path: '/live-scoring' },
+ // { label: 'Live Scoring', path: '/live-scoring' },
 ];
 
 export default function Layout() {
