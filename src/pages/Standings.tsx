@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import HeroComponent from '../utils/HeroImg';
-import imageHero from '../assets/landingPage.png';
+import imageHero from '../assets/standings_img.png';
 import PageShell from '../utils/Shell';
 import Markdown from 'markdown-to-jsx';
 import { standings } from './standingsText'; 
@@ -30,9 +30,9 @@ export default function Standings() {
 
       setter(sorted);
     };
+    fetchLeague('1', setLeague2);
+    fetchLeague('2', setLeague1);
 
-    fetchLeague('1', setLeague1);
-    fetchLeague('2', setLeague2);
   }, []);
 
   return (
@@ -54,7 +54,7 @@ export default function Standings() {
           <Grid container spacing={4}>
              <Grid size={{ xs: 12, md: 6 }}>
 
-              <Typography variant="h6" gutterBottom>Snacktime Bandits</Typography>
+              <Typography variant="h6" gutterBottom>Minivan Mayhem</Typography>
               {league1.map((team: any, idx: number) => (
                 <Box key={idx} mb={1}>
                   <Typography>
@@ -65,7 +65,7 @@ export default function Standings() {
             </Grid>
 
             <Grid size={{ xs: 12, md: 6 }}>
-              <Typography variant="h6" gutterBottom>Minivan Mayhem</Typography>
+              <Typography variant="h6" gutterBottom>Snacktime Bandits</Typography>
               {league2.map((team: any, idx: number) => (
                 <Box key={idx} mb={1}>
                   <Typography>

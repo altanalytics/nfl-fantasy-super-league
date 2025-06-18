@@ -16,14 +16,22 @@ export default function LandingPage() {
             textGray='yes'
             textOutline='yes'
           />
-      <Box mt={4}>
-<Container>
+
+        
+        <Box sx={{ border: '2px solid #ccc',   
+                   borderRadius: 2, 
+                   mt: { xs: 5 },
+                   ml: { xs: 5, md: 30 },
+                   mr: { xs: 5, md: 30 },
+                   mb: {xs: 5}}} >
+        <Container>
     <Markdown>{landingPage}</Markdown>
-        <Typography variant="h5">Conference Score: Minivan Mayhem 0 - Snacktime Bandits 0</Typography>
+        <Typography 
+            sx={{ mb: {xs: 5}}}
+            variant="h5">Conference Score: Minivan Mayhem 0 - Snacktime Bandits 0</Typography>
         </Container>
       </Box>
-      <br />
-      <br />
+    
     </PageShell>
   );
 }
