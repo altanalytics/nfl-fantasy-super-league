@@ -2,7 +2,7 @@
 export const landingPage = `
 ## Welcome to the First Ever Cross League Battle between the Minivan Mayhem and the Snacktime Bandits!
 
-This is the official site for the Driveway Dynasty Fantasy Football League (DDFFL). 
+This is the official site for the Blacktop Battle Royale Fantasy Football League. 
 But it's not live yet, so please check back later for updates.
 
 As a quick preview - this will be a league that pitts two conferences, 12 teams each against each other!

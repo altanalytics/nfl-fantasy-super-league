@@ -11,8 +11,9 @@ export default function LandingPage() {
   return (
     <PageShell>
         <HeroComponent
-            heroText={'The Driveway Dynasty!!'}
+            heroText={'The Blacktop Battle Royale!'}
             heroImage={imageHero}
+            textGray='yes'
             textOutline='yes'
           />
       <Box mt={4}>
@@ -21,6 +22,8 @@ export default function LandingPage() {
         <Typography variant="h5">Conference Score: Minivan Mayhem 0 - Snacktime Bandits 0</Typography>
         </Container>
       </Box>
+      <br />
+      <br />
     </PageShell>
   );
 }

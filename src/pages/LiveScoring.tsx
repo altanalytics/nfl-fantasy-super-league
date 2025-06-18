@@ -21,8 +21,9 @@ export default function LiveScoring() {
   return (
     <PageShell>
         <HeroComponent
-            heroText={'The Driveway Dynasty!!'}
+            heroText={'Coming Soon!'}
             heroImage={imageHero}
+            textGray='yes'
             textOutline='yes'
           />
     <Container>

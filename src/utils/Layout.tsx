@@ -7,7 +7,8 @@ import Box from '@mui/material/Box';
 
 const navItems = [
   { label: 'Home', path: '/' },
-  { label: 'League Info', path: '/league-info' },
+  { label: 'Standings', path: '/standings' },
+  { label: 'Schedule', path: '/schedule' },
   { label: 'Live Scoring', path: '/live-scoring' },
 ];
 
@@ -36,7 +37,7 @@ export default function Layout() {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            DDFFL
+            Blacktop Royale
           </Typography>
           {navItems.map(renderNavButton)}
         </Toolbar>
