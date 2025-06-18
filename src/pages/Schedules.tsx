@@ -3,7 +3,7 @@ import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import HeroComponent from '../utils/HeroImg';
-import imageHero from '../assets/landingPage.png';
+import imageHero from '../assets/schedule_img.png';
 import PageShell from '../utils/Shell';
 import Markdown from 'markdown-to-jsx';
 import { schedule } from './schedulesText';

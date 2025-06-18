@@ -1,9 +1,21 @@
+import { useState } from 'react';
 import { Outlet, Link } from 'react-router-dom';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+  Box,
+  IconButton,
+  Drawer,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+  useTheme,
+  useMediaQuery,
+} from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
 
 const navItems = [
   { label: 'Home', path: '/' },
@@ -13,23 +25,29 @@ const navItems = [
 ];
 
 export default function Layout() {
-  const renderNavButton = ({ label, path }: { label: string; path: string }) => (
-    <Button
-      key={path}
-      component={Link}
-      to={path}
-      sx={{
-        fontSize: '1.1rem',
-        color: 'white',
-        fontWeight: 600,
-        '&:hover': {
-          color: '#ffcc00',
-          backgroundColor: 'rgba(255, 255, 255, 0.1)',
-        },
-      }}
-    >
-      {label}
-    </Button>
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
+
+  const drawer = (
+    <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
+      <Typography variant="h6" sx={{ my: 2 }}>
+        Blacktop Royale
+      </Typography>
+      <List>
+        {navItems.map(({ label, path }) => (
+          <ListItem key={path} disablePadding>
+            <ListItemButton component={Link} to={path}>
+              <ListItemText primary={label} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+    </Box>
   );
 
   return (
@@ -39,7 +57,43 @@ export default function Layout() {
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
             Blacktop Royale
           </Typography>
-          {navItems.map(renderNavButton)}
+          {isMobile ? (
+            <>
+              <IconButton
+                color="inherit"
+                edge="end"
+                onClick={handleDrawerToggle}
+              >
+                <MenuIcon />
+              </IconButton>
+              <Drawer
+                anchor="right"
+                open={mobileOpen}
+                onClose={handleDrawerToggle}
+              >
+                {drawer}
+              </Drawer>
+            </>
+          ) : (
+            navItems.map(({ label, path }) => (
+              <Button
+                key={path}
+                component={Link}
+                to={path}
+                sx={{
+                  fontSize: '1.1rem',
+                  color: 'white',
+                  fontWeight: 600,
+                  '&:hover': {
+                    color: '#ffcc00',
+                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                  },
+                }}
+              >
+                {label}
+              </Button>
+            ))
+          )}
         </Toolbar>
       </AppBar>
       <Outlet />

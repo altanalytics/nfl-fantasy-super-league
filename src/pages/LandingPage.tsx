@@ -21,8 +21,8 @@ export default function LandingPage() {
         <Box sx={{ border: '2px solid #ccc',   
                    borderRadius: 2, 
                    mt: { xs: 5 },
-                   ml: { xs: 5, md: 30 },
-                   mr: { xs: 5, md: 30 },
+                   ml: { xs: 1, md: 30 },
+                   mr: { xs: 1, md: 30 },
                    mb: {xs: 5}}} >
         <Container>
     <Markdown>{landingPage}</Markdown>
