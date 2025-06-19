@@ -44,7 +44,7 @@ export default function Standings() {
         textOutline="yes"
       />
 
-      <Box mt={4}>
+      <Box mt={4} mb = {4}>
         <Container>
           <Markdown>{standings}</Markdown>
           <Typography variant="h5" gutterBottom>
@@ -54,7 +54,7 @@ export default function Standings() {
           <Grid container spacing={4}>
              <Grid size={{ xs: 12, md: 6 }}>
 
-              <Typography variant="h6" gutterBottom>Snacktime Bandits</Typography>
+              <Typography variant="h6" gutterBottom>Minivan Mayhem</Typography>
               {league1.map((team: any, idx: number) => (
                 <Box key={idx} mb={1}>
                   <Typography>
@@ -65,7 +65,7 @@ export default function Standings() {
             </Grid>
 
             <Grid size={{ xs: 12, md: 6 }}>
-              <Typography variant="h6" gutterBottom>Minivan Mayhem</Typography>
+              <Typography variant="h6" gutterBottom>Snacktime Bandits</Typography>
               {league2.map((team: any, idx: number) => (
                 <Box key={idx} mb={1}>
                   <Typography>
