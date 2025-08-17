@@ -7,7 +7,9 @@ import HeroComponent from '../utils/HeroImg';
 import imageHero from '../assets/standings_img.png';
 import PageShell from '../utils/Shell';
 import Markdown from 'markdown-to-jsx';
-import { standings } from './standingsText'; 
+import { standings } from './standingsText';
+import { get } from 'aws-amplify/api';
+import outputs from "../../amplify_outputs.json"; 
 
 export default function Standings() {
   const [league1, setLeague1] = useState([]);
@@ -15,20 +17,43 @@ export default function Standings() {
 
   useEffect(() => {
     const fetchLeague = async (id: string, setter: Function) => {
-      const res = await fetch(`https://3ad3q1gz0c.execute-api.us-east-1.amazonaws.com/prod/teams?league=${id}`);
-      const data = await res.json();
+      try {
+        const restOperation = get({
+          apiName: Object.keys(outputs.custom?.API || {})[0],
+          path: `/teams?league=${id}`
+        });
+        const response = await restOperation.response;
+        const data = await response.body.json();
 
-      const cleaned = data.map((team: any) => ({
-        ...team,
-        in_wins: parseInt(team.in_wins || '0'),
-        total_points: parseInt(team.total_points || '0'),
-      }));
+        const cleaned = data.map((team: any) => ({
+          ...team,
+          in_wins: parseInt(team.in_wins || '0'),
+          total_points: parseInt(team.total_points || '0'),
+        }));
 
-      const sorted = cleaned.sort((a, b) =>
-        b.in_wins - a.in_wins || b.total_points - a.total_points
-      );
+        const sorted = cleaned.sort((a, b) =>
+          b.in_wins - a.in_wins || b.total_points - a.total_points
+        );
 
-      setter(sorted);
+        setter(sorted);
+      } catch (error) {
+        console.error('Error fetching league:', error);
+        // Fallback to hardcoded URL if API not configured yet
+        const res = await fetch(`https://3ad3q1gz0c.execute-api.us-east-1.amazonaws.com/prod/teams?league=${id}`);
+        const data = await res.json();
+
+        const cleaned = data.map((team: any) => ({
+          ...team,
+          in_wins: parseInt(team.in_wins || '0'),
+          total_points: parseInt(team.total_points || '0'),
+        }));
+
+        const sorted = cleaned.sort((a, b) =>
+          b.in_wins - a.in_wins || b.total_points - a.total_points
+        );
+
+        setter(sorted);
+      }
     };
 
     fetchLeague('1', setLeague1);

@@ -16,6 +16,8 @@ import Divider from '@mui/material/Divider';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { get } from 'aws-amplify/api';
+import outputs from "../../amplify_outputs.json";
 
 export default function LeagueInfo() {
   const [teams, setTeams] = useState([]);
@@ -39,14 +41,31 @@ const [selectedWeek, setSelectedWeek] = useState(getDefaultWeek());
 
   useEffect(() => {
     const fetchTeams = async () => {
-      const res = await fetch('https://3ad3q1gz0c.execute-api.us-east-1.amazonaws.com/prod/teams');
-      const data = await res.json();
-      setTeams(data);
-      const map: Record<string, string> = {};
-      data.forEach((team: any) => {
-        map[team.team_name] = team.team_number;
-      });
-      setTeamMap(map);
+      try {
+        const restOperation = get({
+          apiName: Object.keys(outputs.custom?.API || {})[0],
+          path: '/teams'
+        });
+        const response = await restOperation.response;
+        const data = await response.body.json();
+        setTeams(data);
+        const map: Record<string, string> = {};
+        data.forEach((team: any) => {
+          map[team.team_name] = team.team_number;
+        });
+        setTeamMap(map);
+      } catch (error) {
+        console.error('Error fetching teams:', error);
+        // Fallback to hardcoded URL if API not configured yet
+        const res = await fetch('https://3ad3q1gz0c.execute-api.us-east-1.amazonaws.com/prod/teams');
+        const data = await res.json();
+        setTeams(data);
+        const map: Record<string, string> = {};
+        data.forEach((team: any) => {
+          map[team.team_name] = team.team_number;
+        });
+        setTeamMap(map);
+      }
     };
 
     fetchTeams();
@@ -59,9 +78,21 @@ const [selectedWeek, setSelectedWeek] = useState(getDefaultWeek());
       if (selectedTeam !== 'ALL') params.append('team', selectedTeam);
       if (selectedGameType !== 'all') params.append('game_type', selectedGameType);
 
-      const res = await fetch(`https://3ad3q1gz0c.execute-api.us-east-1.amazonaws.com/prod/schedule?${params}`);
-      const data = await res.json();
-      setScheduleData(data);
+      try {
+        const restOperation = get({
+          apiName: Object.keys(outputs.custom?.API || {})[0],
+          path: `/schedule?${params}`
+        });
+        const response = await restOperation.response;
+        const data = await response.body.json();
+        setScheduleData(data);
+      } catch (error) {
+        console.error('Error fetching schedule:', error);
+        // Fallback to hardcoded URL if API not configured yet
+        const res = await fetch(`https://3ad3q1gz0c.execute-api.us-east-1.amazonaws.com/prod/schedule?${params}`);
+        const data = await res.json();
+        setScheduleData(data);
+      }
     };
 
     fetchSchedule();
