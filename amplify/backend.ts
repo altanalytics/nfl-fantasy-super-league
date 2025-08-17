@@ -63,7 +63,7 @@ scheduleResource.addMethod('GET', lambdaIntegration, {
       initialPolicy: [smPolicy],
       retryAttempts: 0,
       architecture: lambda.Architecture.ARM_64,
-      code: lambda.DockerImageCode.fromImageAsset('./r_data', {
+      code: lambda.DockerImageCode.fromImageAsset('amplify/r_data', {
         platform: ecr_assets.Platform.LINUX_ARM64,
       }),
       memorySize: 2048,
