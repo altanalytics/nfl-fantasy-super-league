@@ -47,7 +47,7 @@ const [selectedWeek, setSelectedWeek] = useState(getDefaultWeek());
           path: '/teams'
         });
         const response = await restOperation.response;
-        const data = await response.body.json();
+        const data = await response.body.json() as any[];
         setTeams(data);
         const map: Record<string, string> = {};
         data.forEach((team: any) => {
@@ -84,7 +84,7 @@ const [selectedWeek, setSelectedWeek] = useState(getDefaultWeek());
           path: `/schedule?${params}`
         });
         const response = await restOperation.response;
-        const data = await response.body.json();
+        const data = await response.body.json() as any[];
         setScheduleData(data);
       } catch (error) {
         console.error('Error fetching schedule:', error);

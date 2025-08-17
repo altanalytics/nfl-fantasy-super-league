@@ -23,7 +23,7 @@ export default function Standings() {
           path: `/teams?league=${id}`
         });
         const response = await restOperation.response;
-        const data = await response.body.json();
+        const data = await response.body.json() as any[];
 
         const cleaned = data.map((team: any) => ({
           ...team,
