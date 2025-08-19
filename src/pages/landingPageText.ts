@@ -32,8 +32,8 @@ You’ll draft, set your lineup, and manage waivers *as usual.*
 |-------|-------|
 | **1st Place** | Parent + Child get *matching jerseys* of the child’s choice |
 | **2nd Place** | The child gets a jersey of their choice — the parent watches in conflicted pride |
-| **3rd Place** | You each get \$1 |
-| **Most Points** | Parent + Child get *matching hats*... of the parent’s choosing (power move) |
+| **3rd Place** | Parent + Child get *matching hats*... of the parent’s choosing (power move) |
+| **Most Points** | Parent + Child get sweatshirts |
 
 *Most points scored is based on the regular season only*
 
