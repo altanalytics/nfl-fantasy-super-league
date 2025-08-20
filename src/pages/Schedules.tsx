@@ -43,7 +43,7 @@ const [selectedWeek, setSelectedWeek] = useState(getDefaultWeek());
     const fetchTeams = async () => {
       try {
         const restOperation = get({
-          apiName: Object.keys(outputs.custom?.API || {})[0],
+          apiName: 'nfl-fantasy-api',
           path: '/teams'
         });
         const response = await restOperation.response;
@@ -56,15 +56,6 @@ const [selectedWeek, setSelectedWeek] = useState(getDefaultWeek());
         setTeamMap(map);
       } catch (error) {
         console.error('Error fetching teams:', error);
-        // Fallback to hardcoded URL if API not configured yet
-        const res = await fetch('https://3ad3q1gz0c.execute-api.us-east-1.amazonaws.com/prod/teams');
-        const data = await res.json();
-        setTeams(data);
-        const map: Record<string, string> = {};
-        data.forEach((team: any) => {
-          map[team.team_name] = team.team_number;
-        });
-        setTeamMap(map);
       }
     };
 
@@ -80,7 +71,7 @@ const [selectedWeek, setSelectedWeek] = useState(getDefaultWeek());
 
       try {
         const restOperation = get({
-          apiName: Object.keys(outputs.custom?.API || {})[0],
+          apiName: 'nfl-fantasy-api',
           path: `/schedule?${params}`
         });
         const response = await restOperation.response;
@@ -88,10 +79,6 @@ const [selectedWeek, setSelectedWeek] = useState(getDefaultWeek());
         setScheduleData(data);
       } catch (error) {
         console.error('Error fetching schedule:', error);
-        // Fallback to hardcoded URL if API not configured yet
-        const res = await fetch(`https://3ad3q1gz0c.execute-api.us-east-1.amazonaws.com/prod/schedule?${params}`);
-        const data = await res.json();
-        setScheduleData(data);
       }
     };
 

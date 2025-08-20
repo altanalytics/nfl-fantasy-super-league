@@ -6,12 +6,21 @@ import {
   LambdaIntegration,
   RestApi,
 } from "aws-cdk-lib/aws-apigateway";
+import { PolicyStatement } from "aws-cdk-lib/aws-iam";
 
 import { nflApi } from './functions/nfl-api/resource';
 
 export const backend = defineBackend({
   nflApi,
 });
+
+// Add S3 permissions to the Lambda function
+backend.nflApi.resources.lambda.addToRolePolicy(
+  new PolicyStatement({
+    actions: ["s3:GetObject", "s3:PutObject"],
+    resources: ["arn:aws:s3:::alt-nfl-bucket/*"],
+  })
+);
 
 // Create a new API stack
 const apiStack = backend.createStack("nfl-fantasy-api-stack");

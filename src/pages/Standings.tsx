@@ -19,7 +19,7 @@ export default function Standings() {
     const fetchLeague = async (id: string, setter: Function) => {
       try {
         const restOperation = get({
-          apiName: Object.keys(outputs.custom?.API || {})[0],
+          apiName: 'nfl-fantasy-api',
           path: `/teams?league=${id}`
         });
         const response = await restOperation.response;
@@ -38,21 +38,6 @@ export default function Standings() {
         setter(sorted);
       } catch (error) {
         console.error('Error fetching league:', error);
-        // Fallback to hardcoded URL if API not configured yet
-        const res = await fetch(`https://3ad3q1gz0c.execute-api.us-east-1.amazonaws.com/prod/teams?league=${id}`);
-        const data = await res.json();
-
-        const cleaned = data.map((team: any) => ({
-          ...team,
-          in_wins: parseInt(team.in_wins || '0'),
-          total_points: parseInt(team.total_points || '0'),
-        }));
-
-        const sorted = cleaned.sort((a, b) =>
-          b.in_wins - a.in_wins || b.total_points - a.total_points
-        );
-
-        setter(sorted);
       }
     };
 
