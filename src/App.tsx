@@ -8,15 +8,13 @@ import './index.css';
 
 export default function App() {
   return (
-    <EmailGate>
-      <Router>
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/standings" element={<Standings />} />
-          <Route path="/schedule" element={<Schedules />} />
-          <Route path="/live-scoring" element={<LiveScoring />} />
-        </Routes>
-      </Router>
-    </EmailGate>
+    <Router>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/standings" element={<EmailGate><Standings /></EmailGate>} />
+        <Route path="/schedule" element={<EmailGate><Schedules /></EmailGate>} />
+        <Route path="/live-scoring" element={<EmailGate><LiveScoring /></EmailGate>} />
+      </Routes>
+    </Router>
   );
 }

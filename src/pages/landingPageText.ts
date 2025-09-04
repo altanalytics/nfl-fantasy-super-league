@@ -7,10 +7,7 @@ export const landingPage = `
 
 Congratulations! If you are in one of those leagues, you are about to embark on a **fantasy football adventure** like no other. 
 
-> ***NOTE:*** Don't feel overwhelmed - there is nothing for you to do on this site. 
-> This site simply layers on top of your standard fantasy football league and adds a second weekly showdown — 
-> and a second shot at glory. This will require **ZERO** extra work on your part. 
- In fact, you can ignore this site entirely and simply settle up at season's end if you want.
+> ***NOTE:*** You need to be a valid league member in either the *Minivan Mayhem* or *Snacktime Bandits* ESPN leagues to see Standings and Schedules.
 
 
 ___
