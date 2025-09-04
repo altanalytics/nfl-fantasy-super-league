@@ -17,6 +17,7 @@ import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { get } from 'aws-amplify/api';
+import { getUserTeamNumbers, getAuthorizedEmail } from '../utils/userTeams';
 import outputs from "../../amplify_outputs.json";
 
 export default function LeagueInfo() {
@@ -24,7 +25,7 @@ export default function LeagueInfo() {
   const [teamMap, setTeamMap] = useState({});
   const [selectedTeam, setSelectedTeam] = useState('ALL');
   //const [selectedWeek, setSelectedWeek] = useState('1');
-  const [selectedGameType, setSelectedGameType] = useState('blacktop');
+  const [selectedGameType, setSelectedGameType] = useState('all');
   const [scheduleData, setScheduleData] = useState([]);
   const [expandedGames, setExpandedGames] = useState<Record<string, boolean>>({});
 
@@ -54,6 +55,15 @@ const [selectedWeek, setSelectedWeek] = useState(getDefaultWeek());
           map[team.team_name] = team.team_number;
         });
         setTeamMap(map);
+
+        // Set default team based on authorized email
+        const authorizedEmail = getAuthorizedEmail();
+        if (authorizedEmail) {
+          const userTeamNumbers = getUserTeamNumbers(data, authorizedEmail);
+          if (userTeamNumbers.length > 0) {
+            setSelectedTeam(userTeamNumbers[0]); // Default to first team if multiple
+          }
+        }
       } catch (error) {
         console.error('Error fetching teams:', error);
       }
@@ -182,11 +192,25 @@ const [selectedWeek, setSelectedWeek] = useState(getDefaultWeek());
                   label="Team"
                 >
                   <MenuItem value="ALL">All</MenuItem>
-                  {teams.map((team: any) => (
-                    <MenuItem key={team.team_number} value={team.team_number}>
-                      {team.team_name}
-                    </MenuItem>
-                  ))}
+                  {(() => {
+                    const authorizedEmail = getAuthorizedEmail();
+                    const userTeamNumbers = authorizedEmail ? getUserTeamNumbers(teams, authorizedEmail) : [];
+                    const userTeams = teams.filter((team: any) => userTeamNumbers.includes(team.team_number));
+                    const otherTeams = teams.filter((team: any) => !userTeamNumbers.includes(team.team_number));
+                    
+                    return [
+                      ...userTeams.map((team: any) => (
+                        <MenuItem key={team.team_number} value={team.team_number} sx={{ fontWeight: 'bold', color: 'primary.main' }}>
+                          {team.team_name} (Your Team)
+                        </MenuItem>
+                      )),
+                      ...otherTeams.map((team: any) => (
+                        <MenuItem key={team.team_number} value={team.team_number}>
+                          {team.team_name}
+                        </MenuItem>
+                      ))
+                    ];
+                  })()}
                 </Select>
               </FormControl>
             </Grid>
