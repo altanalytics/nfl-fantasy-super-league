@@ -102,6 +102,8 @@ Play hard. Parent responsibly. And may the best **neighborhood alliance** win.
 > *Welcome to the ultimate family-fueled fantasy football showdown:  
 > the Blacktop Battle Royale Showdown.*
 
-*Note: total cost for all prizes across both leagues will be around $100 per team.*
+*Note: total cost for all prizes across both leagues will be around $85 per team.*
+
+As part of this project, I started building an Agentic AI stat guru app that you can check out [here](https://nfl.altanalyticsllc.com).
 
 `;
