@@ -14,6 +14,9 @@ import outputs from "../../amplify_outputs.json";
 export default function Standings() {
   const [league1, setLeague1] = useState([]);
   const [league2, setLeague2] = useState([]);
+  
+  const league1Wins = league1.reduce((sum: number, team: any) => sum + team.in_wins, 0);
+  const league2Wins = league2.reduce((sum: number, team: any) => sum + team.in_wins, 0);
 
   useEffect(() => {
     const fetchLeague = async (id: string, setter: Function) => {
@@ -58,7 +61,7 @@ export default function Standings() {
         <Container>
           <Markdown>{standings}</Markdown>
           <Typography variant="h5" gutterBottom>
-            Conference Score: Minivan Mayhem 0 - Snacktime Bandits 0
+            Conference Score: Minivan Mayhem {league1Wins} - Snacktime Bandits {league2Wins}
           </Typography>
 
           <Grid container spacing={4}>
