@@ -32,57 +32,66 @@ import outputs from "../../amplify_outputs.json";
 
 const getPositionColor = (position: string) => {
   const colors: Record<string, string> = {
-    'QB': 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-    'RB': 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)', 
-    'WR': 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
-    'TE': 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
-    'K': 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
-    'DST': 'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)',
-    'FLEX': 'linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)'
+    'QB': '#e0e7ff',
+    'RB': '#fce7f3', 
+    'WR': '#e0f2fe',
+    'TE': '#dcfce7',
+    'K': '#fef3c7',
+    'DST': '#f0fdfa',
+    'FLEX': '#fef7ed'
   };
-  return colors[position] || 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)';
+  return colors[position] || '#f8fafc';
 };
 
 const getPositionTextColor = (position: string) => {
-  return '#ffffff';
+  const colors: Record<string, string> = {
+    'QB': '#3730a3',
+    'RB': '#be185d', 
+    'WR': '#0369a1',
+    'TE': '#166534',
+    'K': '#92400e',
+    'DST': '#065f46',
+    'FLEX': '#c2410c'
+  };
+  return colors[position] || '#475569';
 };
 
 const getNFLTeamColors = (team: string) => {
-  const teamColors: Record<string, { primary: string; secondary: string }> = {
-    'ARI': { primary: '#97233F', secondary: '#000000' },
-    'ATL': { primary: '#A71930', secondary: '#000000' },
-    'BAL': { primary: '#241773', secondary: '#000000' },
-    'BUF': { primary: '#00338D', secondary: '#C60C30' },
-    'CAR': { primary: '#0085CA', secondary: '#101820' },
-    'CHI': { primary: '#0B162A', secondary: '#C83803' },
-    'CIN': { primary: '#FB4F14', secondary: '#000000' },
-    'CLE': { primary: '#311D00', secondary: '#FF3C00' },
-    'DAL': { primary: '#003594', secondary: '#041E42' },
-    'DEN': { primary: '#FB4F14', secondary: '#002244' },
-    'DET': { primary: '#0076B6', secondary: '#B0B7BC' },
-    'GB': { primary: '#203731', secondary: '#FFB612' },
-    'HOU': { primary: '#03202F', secondary: '#A71930' },
-    'IND': { primary: '#002C5F', secondary: '#A2AAAD' },
-    'JAX': { primary: '#101820', secondary: '#D7A22A' },
-    'KC': { primary: '#E31837', secondary: '#FFB81C' },
-    'LV': { primary: '#000000', secondary: '#A5ACAF' },
-    'LAC': { primary: '#0080C6', secondary: '#FFC20E' },
-    'LAR': { primary: '#003594', secondary: '#FFA300' },
-    'MIA': { primary: '#008E97', secondary: '#FC4C02' },
-    'MIN': { primary: '#4F2683', secondary: '#FFC62F' },
-    'NE': { primary: '#002244', secondary: '#C60C30' },
-    'NO': { primary: '#101820', secondary: '#D3BC8D' },
-    'NYG': { primary: '#0B2265', secondary: '#A71930' },
-    'NYJ': { primary: '#125740', secondary: '#000000' },
-    'PHI': { primary: '#004C54', secondary: '#A5ACAF' },
-    'PIT': { primary: '#FFB612', secondary: '#101820' },
-    'SF': { primary: '#AA0000', secondary: '#B3995D' },
-    'SEA': { primary: '#002244', secondary: '#69BE28' },
-    'TB': { primary: '#D50A0A', secondary: '#FF7900' },
-    'TEN': { primary: '#0C2340', secondary: '#4B92DB' },
-    'WAS': { primary: '#5A1414', secondary: '#FFB612' }
+  const teamColors: Record<string, { background: string; text: string }> = {
+    'ARI': { background: '#fecaca', text: '#991b1b' },
+    'ATL': { background: '#fecaca', text: '#991b1b' },
+    'BAL': { background: '#e0e7ff', text: '#3730a3' },
+    'BUF': { background: '#dbeafe', text: '#1d4ed8' },
+    'CAR': { background: '#e0f2fe', text: '#0369a1' },
+    'CHI': { background: '#f1f5f9', text: '#334155' },
+    'CIN': { background: '#fed7aa', text: '#c2410c' },
+    'CLE': { background: '#fed7aa', text: '#c2410c' },
+    'DAL': { background: '#dbeafe', text: '#1d4ed8' },
+    'DEN': { background: '#fed7aa', text: '#c2410c' },
+    'DET': { background: '#dbeafe', text: '#1d4ed8' },
+    'GB': { background: '#dcfce7', text: '#166534' },
+    'HOU': { background: '#f1f5f9', text: '#334155' },
+    'IND': { background: '#dbeafe', text: '#1d4ed8' },
+    'JAX': { background: '#fef3c7', text: '#92400e' },
+    'KC': { background: '#fecaca', text: '#991b1b' },
+    'LV': { background: '#f1f5f9', text: '#334155' },
+    'LAC': { background: '#dbeafe', text: '#1d4ed8' },
+    'LAR': { background: '#dbeafe', text: '#1d4ed8' },
+    'MIA': { background: '#e0f2fe', text: '#0369a1' },
+    'MIN': { background: '#e0e7ff', text: '#3730a3' },
+    'NE': { background: '#dbeafe', text: '#1d4ed8' },
+    'NO': { background: '#fef3c7', text: '#92400e' },
+    'NYG': { background: '#dbeafe', text: '#1d4ed8' },
+    'NYJ': { background: '#dcfce7', text: '#166534' },
+    'PHI': { background: '#dcfce7', text: '#166534' },
+    'PIT': { background: '#fef3c7', text: '#92400e' },
+    'SF': { background: '#fecaca', text: '#991b1b' },
+    'SEA': { background: '#dcfce7', text: '#166534' },
+    'TB': { background: '#fecaca', text: '#991b1b' },
+    'TEN': { background: '#dbeafe', text: '#1d4ed8' },
+    'WAS': { background: '#fecaca', text: '#991b1b' }
   };
-  return teamColors[team] || { primary: '#666666', secondary: '#cccccc' };
+  return teamColors[team] || { background: '#f8fafc', text: '#64748b' };
 };
 
 const StyledCard = styled(Card)(({ theme }) => ({
@@ -335,29 +344,68 @@ const [selectedWeek, setSelectedWeek] = useState(getDefaultWeek());
 
           <Collapse in={isExpanded} timeout="auto" unmountOnExit>
             <Box sx={{ px: 3, pb: 3 }}>
-              {/* Header Row */}
+              {/* Desktop Header Row */}
               <Box 
                 display="flex" 
                 alignItems="center"
-                px={2} 
-                py={2} 
+                px={2}
+                py={2}
                 sx={{ 
                   background: 'linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%)',
                   borderRadius: '12px',
                   mb: 2,
-                  border: '1px solid rgba(255,255,255,0.1)'
+                  border: '1px solid rgba(255,255,255,0.1)',
+                  display: { xs: 'none', sm: 'flex' }
                 }}
               >
-                <Box flex={1} sx={{ color: '#1e293b', fontWeight: 'bold', fontSize: '0.9rem' }}>POS</Box>
-                <Box flex={1} sx={{ color: '#1e293b', fontWeight: 'bold', fontSize: '0.9rem' }}>TEAM</Box>
+                {/* Home Team Headers */}
+                <Box flex={1} sx={{ color: '#1e293b', fontWeight: 'bold', fontSize: '0.9rem', textAlign: 'center' }}>POS</Box>
+                <Box flex={1} sx={{ color: '#1e293b', fontWeight: 'bold', fontSize: '0.9rem', textAlign: 'center' }}>TEAM</Box>
                 <Box flex={3} sx={{ color: '#1e293b', fontWeight: 'bold', fontSize: '0.9rem' }}>HOME PLAYER</Box>
-                <Box flex={2} sx={{ color: '#1e293b', fontWeight: 'bold', fontSize: '0.9rem' }}>PROJ</Box>
-                <Box flex={2} sx={{ color: '#1e293b', fontWeight: 'bold', fontSize: '0.9rem' }}>ACTUAL</Box>
+                <Box flex={1.5} sx={{ color: '#1e293b', fontWeight: 'bold', fontSize: '0.9rem', textAlign: 'center' }}>PROJ</Box>
+                <Box flex={1.5} sx={{ color: '#1e293b', fontWeight: 'bold', fontSize: '0.9rem', textAlign: 'center' }}>ACTUAL</Box>
+                
+                {/* Away Team Headers */}
+                <Box flex={1} sx={{ color: '#1e293b', fontWeight: 'bold', fontSize: '0.9rem', textAlign: 'center' }}>POS</Box>
+                <Box flex={1} sx={{ color: '#1e293b', fontWeight: 'bold', fontSize: '0.9rem', textAlign: 'center' }}>TEAM</Box>
                 <Box flex={3} sx={{ color: '#1e293b', fontWeight: 'bold', fontSize: '0.9rem' }}>AWAY PLAYER</Box>
-                <Box flex={1} sx={{ color: '#1e293b', fontWeight: 'bold', fontSize: '0.9rem' }}>POS</Box>
-                <Box flex={1} sx={{ color: '#1e293b', fontWeight: 'bold', fontSize: '0.9rem' }}>TEAM</Box>
-                <Box flex={2} sx={{ color: '#1e293b', fontWeight: 'bold', fontSize: '0.9rem' }}>PROJ</Box>
-                <Box flex={2} sx={{ color: '#1e293b', fontWeight: 'bold', fontSize: '0.9rem' }}>ACTUAL</Box>
+                <Box flex={1.5} sx={{ color: '#1e293b', fontWeight: 'bold', fontSize: '0.9rem', textAlign: 'center' }}>PROJ</Box>
+                <Box flex={1.5} sx={{ color: '#1e293b', fontWeight: 'bold', fontSize: '0.9rem', textAlign: 'center' }}>ACTUAL</Box>
+              </Box>
+
+              {/* Mobile Header */}
+              <Box 
+                sx={{ 
+                  background: 'linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%)',
+                  borderRadius: '12px',
+                  mb: 2,
+                  border: '1px solid rgba(255,255,255,0.1)',
+                  display: { xs: 'block', sm: 'none' },
+                  p: 2
+                }}
+              >
+                <Grid container spacing={2}>
+                  <Grid size={{ xs: 6 }}>
+                    <Typography variant="body2" sx={{ 
+                      color: '#1e293b', 
+                      fontWeight: 'bold', 
+                      fontSize: '0.8rem',
+                      textAlign: 'center'
+                    }}>
+                      HOME PLAYER
+                    </Typography>
+                  </Grid>
+                  <Grid size={{ xs: 6 }}>
+                    <Typography variant="body2" sx={{ 
+                      color: '#1e293b', 
+                      fontWeight: 'bold', 
+                      fontSize: '0.8rem',
+                      textAlign: 'center'
+                    }}>
+                      AWAY PLAYER
+                    </Typography>
+                  </Grid>
+                </Grid>
               </Box>
 
               {detailRows.map((row, i) => {
@@ -376,18 +424,20 @@ const [selectedWeek, setSelectedWeek] = useState(getDefaultWeek());
                         <Chip 
                           label="BENCH PLAYERS" 
                           sx={{ 
-                            background: 'linear-gradient(45deg, #f59e0b 0%, #d97706 100%)',
+                            backgroundColor: '#f59e0b',
                             color: 'white',
                             fontWeight: 'bold',
-                            fontSize: '0.8rem',
+                            fontSize: { xs: '0.7rem', sm: '0.8rem' },
                             px: 2,
                             py: 1
                           }} 
                         />
                       </Box>
                     )}
-                    <PlayerRow isBench={isBench}>
-                      <Box flex={1}>
+                    {/* Desktop Layout - Full Table with Chips */}
+                    <PlayerRow isBench={isBench} sx={{ display: { xs: 'none', sm: 'flex' } }}>
+                      {/* Home Team */}
+                      <Box flex={1} display="flex" justifyContent="center">
                         <Chip 
                           label={row.home_position || 'N/A'} 
                           size="small"
@@ -400,31 +450,34 @@ const [selectedWeek, setSelectedWeek] = useState(getDefaultWeek());
                           }}
                         />
                       </Box>
-                      <Box flex={1}>
+                      <Box flex={1} display="flex" justifyContent="center">
                         <Chip 
                           label={row.home_pro_team || 'N/A'} 
                           size="small"
                           sx={{
-                            backgroundColor: getNFLTeamColors(row.home_pro_team).primary,
-                            color: 'white',
+                            backgroundColor: getNFLTeamColors(row.home_pro_team).background,
+                            color: getNFLTeamColors(row.home_pro_team).text,
                             fontWeight: 'bold',
                             fontSize: '0.7rem',
-                            minWidth: '40px'
+                            minWidth: '40px',
+                            border: `1px solid ${getNFLTeamColors(row.home_pro_team).text}`
                           }}
                         />
                       </Box>
                       <Box flex={3} sx={{ color: '#1e293b', fontWeight: '500' }}>{row.home_player}</Box>
-                      <Box flex={2} sx={{ color: '#64748b' }}>{homeProj.toFixed(1)}</Box>
-                      <Box flex={2} sx={{ 
+                      <Box flex={1.5} sx={{ color: '#64748b', textAlign: 'center' }}>{homeProj.toFixed(1)}</Box>
+                      <Box flex={1.5} sx={{ 
                         fontWeight: 'bold', 
+                        textAlign: 'center',
                         color: homeActual > homeProj ? '#059669' : homeActual < homeProj ? '#dc2626' : '#1e293b'
                       }}>
                         {homeActual.toFixed(1)}
-                        {homeActual > homeProj && <TrendingUpIcon sx={{ fontSize: 16, ml: 0.5, color: '#4ade80' }} />}
-                        {homeActual < homeProj && <TrendingDownIcon sx={{ fontSize: 16, ml: 0.5, color: '#f87171' }} />}
+                        {homeActual > homeProj && <TrendingUpIcon sx={{ fontSize: 16, ml: 0.5, color: '#059669' }} />}
+                        {homeActual < homeProj && <TrendingDownIcon sx={{ fontSize: 16, ml: 0.5, color: '#dc2626' }} />}
                       </Box>
-                      <Box flex={3} sx={{ color: '#1e293b', fontWeight: '500' }}>{row.away_player}</Box>
-                      <Box flex={1}>
+                      
+                      {/* Away Team */}
+                      <Box flex={1} display="flex" justifyContent="center">
                         <Chip 
                           label={row.away_position || 'N/A'} 
                           size="small"
@@ -437,29 +490,149 @@ const [selectedWeek, setSelectedWeek] = useState(getDefaultWeek());
                           }}
                         />
                       </Box>
-                      <Box flex={1}>
+                      <Box flex={1} display="flex" justifyContent="center">
                         <Chip 
                           label={row.away_pro_team || 'N/A'} 
                           size="small"
                           sx={{
-                            backgroundColor: getNFLTeamColors(row.away_pro_team).primary,
-                            color: 'white',
+                            backgroundColor: getNFLTeamColors(row.away_pro_team).background,
+                            color: getNFLTeamColors(row.away_pro_team).text,
                             fontWeight: 'bold',
                             fontSize: '0.7rem',
-                            minWidth: '40px'
+                            minWidth: '40px',
+                            border: `1px solid ${getNFLTeamColors(row.away_pro_team).text}`
                           }}
                         />
                       </Box>
-                      <Box flex={2} sx={{ color: '#64748b' }}>{awayProj.toFixed(1)}</Box>
-                      <Box flex={2} sx={{ 
+                      <Box flex={3} sx={{ color: '#1e293b', fontWeight: '500' }}>{row.away_player}</Box>
+                      <Box flex={1.5} sx={{ color: '#64748b', textAlign: 'center' }}>{awayProj.toFixed(1)}</Box>
+                      <Box flex={1.5} sx={{ 
                         fontWeight: 'bold', 
+                        textAlign: 'center',
                         color: awayActual > awayProj ? '#059669' : awayActual < awayProj ? '#dc2626' : '#1e293b'
                       }}>
                         {awayActual.toFixed(1)}
-                        {awayActual > awayProj && <TrendingUpIcon sx={{ fontSize: 16, ml: 0.5, color: '#4ade80' }} />}
-                        {awayActual < awayProj && <TrendingDownIcon sx={{ fontSize: 16, ml: 0.5, color: '#f87171' }} />}
+                        {awayActual > awayProj && <TrendingUpIcon sx={{ fontSize: 16, ml: 0.5, color: '#059669' }} />}
+                        {awayActual < awayProj && <TrendingDownIcon sx={{ fontSize: 16, ml: 0.5, color: '#dc2626' }} />}
                       </Box>
                     </PlayerRow>
+
+                    {/* Mobile Layout - Clean Text Format */}
+                    <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
+                      <PlayerRow isBench={isBench} sx={{ flexDirection: 'column', alignItems: 'stretch', py: 2 }}>
+                        <Grid container spacing={2}>
+                          {/* Home Player */}
+                          <Grid size={{ xs: 6 }}>
+                            <Box>
+                              <Typography variant="body2" sx={{ 
+                                color: '#1e293b', 
+                                fontWeight: 'bold',
+                                fontSize: '0.85rem',
+                                mb: 0.5
+                              }}>
+                                {row.home_player}
+                              </Typography>
+                              <Box display="flex" gap={2} mb={0.5}>
+                                <Typography variant="body2" sx={{ color: '#64748b', fontSize: '0.8rem' }}>
+                                  {homeProj.toFixed(1)}
+                                </Typography>
+                                <Typography variant="body2" sx={{ 
+                                  fontWeight: 'bold',
+                                  fontSize: '0.8rem',
+                                  color: homeActual > homeProj ? '#059669' : homeActual < homeProj ? '#dc2626' : '#1e293b'
+                                }}>
+                                  {homeActual.toFixed(1)}
+                                  {homeActual > homeProj && <TrendingUpIcon sx={{ fontSize: 12, ml: 0.5, color: '#059669' }} />}
+                                  {homeActual < homeProj && <TrendingDownIcon sx={{ fontSize: 12, ml: 0.5, color: '#dc2626' }} />}
+                                </Typography>
+                              </Box>
+                              <Box display="flex" gap={0.5} alignItems="center">
+                                <Chip 
+                                  label={row.home_position || 'N/A'} 
+                                  size="small"
+                                  sx={{
+                                    background: getPositionColor(row.home_position),
+                                    color: getPositionTextColor(row.home_position),
+                                    fontWeight: 'bold',
+                                    fontSize: '0.65rem',
+                                    height: '18px',
+                                    border: 'none'
+                                  }}
+                                />
+                                <Chip 
+                                  label={row.home_pro_team || 'N/A'} 
+                                  size="small"
+                                  sx={{
+                                    backgroundColor: getNFLTeamColors(row.home_pro_team).background,
+                                    color: getNFLTeamColors(row.home_pro_team).text,
+                                    fontWeight: 'bold',
+                                    fontSize: '0.65rem',
+                                    height: '18px',
+                                    minWidth: '32px',
+                                    border: `1px solid ${getNFLTeamColors(row.home_pro_team).text}`
+                                  }}
+                                />
+                              </Box>
+                            </Box>
+                          </Grid>
+
+                          {/* Away Player */}
+                          <Grid size={{ xs: 6 }}>
+                            <Box>
+                              <Typography variant="body2" sx={{ 
+                                color: '#1e293b', 
+                                fontWeight: 'bold',
+                                fontSize: '0.85rem',
+                                mb: 0.5
+                              }}>
+                                {row.away_player}
+                              </Typography>
+                              <Box display="flex" gap={2} mb={0.5}>
+                                <Typography variant="body2" sx={{ color: '#64748b', fontSize: '0.8rem' }}>
+                                  {awayProj.toFixed(1)}
+                                </Typography>
+                                <Typography variant="body2" sx={{ 
+                                  fontWeight: 'bold',
+                                  fontSize: '0.8rem',
+                                  color: awayActual > awayProj ? '#059669' : awayActual < awayProj ? '#dc2626' : '#1e293b'
+                                }}>
+                                  {awayActual.toFixed(1)}
+                                  {awayActual > awayProj && <TrendingUpIcon sx={{ fontSize: 12, ml: 0.5, color: '#059669' }} />}
+                                  {awayActual < awayProj && <TrendingDownIcon sx={{ fontSize: 12, ml: 0.5, color: '#dc2626' }} />}
+                                </Typography>
+                              </Box>
+                              <Box display="flex" gap={0.5} alignItems="center">
+                                <Chip 
+                                  label={row.away_position || 'N/A'} 
+                                  size="small"
+                                  sx={{
+                                    background: getPositionColor(row.away_position),
+                                    color: getPositionTextColor(row.away_position),
+                                    fontWeight: 'bold',
+                                    fontSize: '0.65rem',
+                                    height: '18px',
+                                    border: 'none'
+                                  }}
+                                />
+                                <Chip 
+                                  label={row.away_pro_team || 'N/A'} 
+                                  size="small"
+                                  sx={{
+                                    backgroundColor: getNFLTeamColors(row.away_pro_team).background,
+                                    color: getNFLTeamColors(row.away_pro_team).text,
+                                    fontWeight: 'bold',
+                                    fontSize: '0.65rem',
+                                    height: '18px',
+                                    minWidth: '32px',
+                                    border: `1px solid ${getNFLTeamColors(row.away_pro_team).text}`
+                                  }}
+                                />
+                              </Box>
+                            </Box>
+                          </Grid>
+                        </Grid>
+                      </PlayerRow>
+                    </Box>
                   </Box>
                 );
               })}
