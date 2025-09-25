@@ -21,6 +21,10 @@ interface ScheduleRow {
   away_team: string;
   home_player: string;
   away_player: string;
+  home_position: string;
+  away_position: string;
+  home_pro_team: string;
+  away_pro_team: string;
   home_projected: string;
   home_actual: string;
   away_projected: string;
@@ -64,10 +68,10 @@ async function getS3Object(key: string): Promise<string> {
 function parseCsv<T>(csvContent: string): T[] {
   const lines = csvContent.trim().split('\n');
   if (lines.length < 2) return [];
-  
+
   const headers = lines[0].split(',').map(h => h.trim());
   const rows: T[] = [];
-  
+
   for (let i = 1; i < lines.length; i++) {
     const values = lines[i].split(',').map(v => v.trim());
     const row: any = {};
@@ -76,7 +80,7 @@ function parseCsv<T>(csvContent: string): T[] {
     });
     rows.push(row);
   }
-  
+
   return rows;
 }
 
@@ -95,7 +99,7 @@ function createResponse(statusCode: number, body: any): APIGatewayProxyResult {
 
 export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   await logRequest(event);
-  
+
   const params = event.queryStringParameters || {};
   const path = event.path || '';
 
@@ -122,7 +126,7 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
 
       const key = `week_${week}.csv`;
       let csvContent: string;
-      
+
       try {
         csvContent = await getS3Object(key);
       } catch (error) {
@@ -136,7 +140,7 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
         rows = rows.filter(r => r.game_type.toLowerCase() === gameType);
       }
       if (team && team !== 'ALL') {
-        rows = rows.filter(r => 
+        rows = rows.filter(r =>
           team === r.home_bbr_team_id || team === r.away_bbr_team_id
         );
       }
@@ -166,7 +170,11 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
           home_team: row.home_team,
           away_team: row.away_team,
           home_player: row.home_player,
+          home_position: row.home_position,
+          home_pro_team: row.home_pro_team,
           away_player: row.away_player,
+          away_position: row.away_position,
+          away_pro_team: row.away_pro_team,
           home_projected: row.home_projected,
           home_actual: row.home_actual,
           away_projected: row.away_projected,
