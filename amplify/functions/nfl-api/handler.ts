@@ -34,6 +34,17 @@ interface ScheduleRow {
   away_bbr_team_id: string;
 }
 
+interface ScoreboardRow {
+  week: string;
+  home_team: string;
+  home_points: string;
+  away_team: string;
+  away_points: string;
+  winning_team: string;
+  winning_name: string;
+  winning_league: string;
+}
+
 async function logRequest(event: APIGatewayProxyEvent): Promise<void> {
   const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
   const rand = Math.floor(Math.random() * 9000) + 1000;
@@ -183,6 +194,20 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
       }
 
       return createResponse(200, output);
+
+    } else if (path === '/scoreboard') {
+      const week = params.week;
+
+      if (!week) {
+        return createResponse(400, { error: 'Missing week parameter' });
+      }
+
+      const csvContent = await getS3Object('bbr_schedule.csv');
+      let rows = parseCsv<ScoreboardRow>(csvContent);
+
+      rows = rows.filter(r => r.week === week);
+
+      return createResponse(200, rows);
 
     } else {
       return createResponse(400, { error: 'Invalid endpoint' });
