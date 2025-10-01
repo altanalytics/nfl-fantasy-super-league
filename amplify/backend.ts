@@ -53,6 +53,12 @@ scheduleResource.addMethod('GET', lambdaIntegration, {
   authorizationType: AuthorizationType.NONE,
 });
 
+// Add the /scoreboard resource
+const scoreboardResource = nflRestApi.root.addResource('scoreboard');
+scoreboardResource.addMethod('GET', lambdaIntegration, {
+  authorizationType: AuthorizationType.NONE,
+});
+
 // Add the API to outputs
 backend.addOutput({
   custom: {
