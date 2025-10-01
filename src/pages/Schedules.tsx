@@ -26,6 +26,12 @@ import { styled } from '@mui/material/styles';
 import SportsFootballIcon from '@mui/icons-material/SportsFootball';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import TrendingDownIcon from '@mui/icons-material/TrendingDown';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
 import { get } from 'aws-amplify/api';
 import { getUserTeamNumbers, getAuthorizedEmail } from '../utils/userTeams';
 import outputs from "../../amplify_outputs.json";
@@ -139,7 +145,9 @@ export default function LeagueInfo() {
   //const [selectedWeek, setSelectedWeek] = useState('1');
   const [selectedGameType, setSelectedGameType] = useState('all');
   const [scheduleData, setScheduleData] = useState([]);
+  const [scoreboardData, setScoreboardData] = useState([]);
   const [expandedGames, setExpandedGames] = useState<Record<string, boolean>>({});
+  const [scoreboardExpanded, setScoreboardExpanded] = useState(false);
 
   const getDefaultWeek = () => {
     const today = new Date();
@@ -206,6 +214,24 @@ const [selectedWeek, setSelectedWeek] = useState(getDefaultWeek());
 
     fetchSchedule();
   }, [selectedTeam, selectedWeek, selectedGameType]);
+
+  useEffect(() => {
+    const fetchScoreboard = async () => {
+      try {
+        const restOperation = get({
+          apiName: 'nfl-fantasy-api',
+          path: `/scoreboard?week=${selectedWeek}`
+        });
+        const response = await restOperation.response;
+        const data = await response.body.json() as any[];
+        setScoreboardData(data);
+      } catch (error) {
+        console.error('Error fetching scoreboard:', error);
+      }
+    };
+
+    fetchScoreboard();
+  }, [selectedWeek]);
 
   const toggleGameExpand = (gameId: string) => {
     setExpandedGames(prev => ({ ...prev, [gameId]: !prev[gameId] }));
@@ -930,6 +956,147 @@ const [selectedWeek, setSelectedWeek] = useState(getDefaultWeek());
                   </FormControl>
                 </Grid>
               </Grid>
+            </StyledCard>
+
+            {/* Scoreboard Section */}
+            <StyledCard sx={{ p: 4, mb: 4 }}>
+              <Box display="flex" alignItems="center" justifyContent="space-between" mb={3}>
+                <Box display="flex" alignItems="center" gap={2}>
+                  <SportsFootballIcon sx={{ color: '#667eea' }} />
+                  <Typography 
+                    variant="h5" 
+                    sx={{ 
+                      color: '#1e293b',
+                      fontWeight: 'bold'
+                    }}
+                  >
+                    Cross League Scoreboard
+                  </Typography>
+                  <IconButton 
+                    onClick={() => setScoreboardExpanded(!scoreboardExpanded)}
+                    sx={{ 
+                      background: 'linear-gradient(45deg, #667eea 0%, #764ba2 100%)',
+                      color: 'white',
+                      width: 32,
+                      height: 32,
+                      '&:hover': { 
+                        background: 'linear-gradient(45deg, #5a6fd8 0%, #6a4190 100%)',
+                      }
+                    }}
+                  >
+                    <ExpandMoreIcon sx={{ 
+                      transform: scoreboardExpanded ? 'rotate(180deg)' : 'rotate(0)', 
+                      transition: '0.3s ease',
+                      fontSize: 20
+                    }} />
+                  </IconButton>
+                </Box>
+                {scoreboardData.length > 0 && (
+                  <Box display="flex" gap={2}>
+                    <Chip 
+                      label={`Minivan Mayhem: ${scoreboardData.filter((game: any) => game.winning_league === 'Minivan Mayhem').length}`}
+                      sx={{ backgroundColor: '#dbeafe', color: '#1d4ed8', fontWeight: 'bold' }}
+                    />
+                    <Chip 
+                      label={`Snacktime Bandits: ${scoreboardData.filter((game: any) => game.winning_league === 'Snacktime Bandits').length}`}
+                      sx={{ backgroundColor: '#dcfce7', color: '#166534', fontWeight: 'bold' }}
+                    />
+                  </Box>
+                )}
+              </Box>
+              {scoreboardData.length === 0 ? (
+                <Typography sx={{ color: '#64748b', textAlign: 'center', py: 2 }}>
+                  No scoreboard data available for Week {selectedWeek}
+                </Typography>
+              ) : (
+                <Collapse in={scoreboardExpanded} timeout="auto" unmountOnExit>
+                  {/* Desktop Table */}
+                  <TableContainer component={Paper} sx={{ borderRadius: '12px', overflow: 'hidden', display: { xs: 'none', md: 'block' } }}>
+                    <Table>
+                      <TableHead>
+                        <TableRow sx={{ backgroundColor: '#f8fafc' }}>
+                          <TableCell sx={{ fontWeight: 'bold', color: '#1e293b' }}>Home Team</TableCell>
+                          <TableCell sx={{ fontWeight: 'bold', color: '#1e293b' }}>Home Points</TableCell>
+                          <TableCell sx={{ fontWeight: 'bold', color: '#1e293b' }}>Away Team</TableCell>
+                          <TableCell sx={{ fontWeight: 'bold', color: '#1e293b' }}>Away Points</TableCell>
+                          <TableCell sx={{ fontWeight: 'bold', color: '#1e293b' }}>Winning Team</TableCell>
+                          <TableCell sx={{ fontWeight: 'bold', color: '#1e293b' }}>Winning Name</TableCell>
+                          <TableCell sx={{ fontWeight: 'bold', color: '#1e293b' }}>Winning League</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {scoreboardData.map((game: any, idx: number) => {
+                          const homePoints = parseFloat(game.home_points);
+                          const awayPoints = parseFloat(game.away_points);
+                          const homeWins = homePoints > awayPoints;
+                          return (
+                            <TableRow key={idx} sx={{ '&:nth-of-type(odd)': { backgroundColor: '#fafbfc' } }}>
+                              <TableCell sx={{ fontWeight: '500' }}>{game.home_team}</TableCell>
+                              <TableCell sx={{ 
+                                fontWeight: 'bold', 
+                                color: homeWins ? '#059669' : '#dc2626' 
+                              }}>
+                                {homePoints.toFixed(1)}
+                              </TableCell>
+                              <TableCell sx={{ fontWeight: '500' }}>{game.away_team}</TableCell>
+                              <TableCell sx={{ 
+                                fontWeight: 'bold', 
+                                color: !homeWins ? '#059669' : '#dc2626' 
+                              }}>
+                                {awayPoints.toFixed(1)}
+                              </TableCell>
+                              <TableCell sx={{ fontWeight: '500' }}>{game.winning_team}</TableCell>
+                              <TableCell sx={{ fontWeight: 'bold' }}>{game.winning_name}</TableCell>
+                              <TableCell sx={{ fontWeight: '500' }}>{game.winning_league}</TableCell>
+                            </TableRow>
+                          );
+                        })}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+
+                  {/* Mobile Table */}
+                  <TableContainer component={Paper} sx={{ borderRadius: '12px', overflow: 'hidden', display: { xs: 'block', md: 'none' } }}>
+                    <Table>
+                      <TableHead>
+                        <TableRow sx={{ backgroundColor: '#f8fafc' }}>
+                          <TableCell sx={{ fontWeight: 'bold', color: '#1e293b', fontSize: '0.8rem' }}>Home</TableCell>
+                          <TableCell sx={{ fontWeight: 'bold', color: '#1e293b', fontSize: '0.8rem' }}>Away</TableCell>
+                          <TableCell sx={{ fontWeight: 'bold', color: '#1e293b', fontSize: '0.8rem' }}>Winner</TableCell>
+                          <TableCell sx={{ fontWeight: 'bold', color: '#1e293b', fontSize: '0.8rem' }}>League</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {scoreboardData.map((game: any, idx: number) => {
+                          const homePoints = parseFloat(game.home_points);
+                          const awayPoints = parseFloat(game.away_points);
+                          const homeWins = homePoints > awayPoints;
+                          return (
+                            <TableRow key={idx} sx={{ '&:nth-of-type(odd)': { backgroundColor: '#fafbfc' } }}>
+                              <TableCell sx={{ 
+                                fontWeight: 'bold', 
+                                color: homeWins ? '#059669' : '#dc2626',
+                                fontSize: '0.85rem'
+                              }}>
+                                {homePoints.toFixed(1)}
+                              </TableCell>
+                              <TableCell sx={{ 
+                                fontWeight: 'bold', 
+                                color: !homeWins ? '#059669' : '#dc2626',
+                                fontSize: '0.85rem'
+                              }}>
+                                {awayPoints.toFixed(1)}
+                              </TableCell>
+                              <TableCell sx={{ fontWeight: '500', fontSize: '0.85rem' }}>{game.winning_name}</TableCell>
+                              <TableCell sx={{ fontWeight: '500', fontSize: '0.85rem' }}>{game.winning_league}</TableCell>
+                            </TableRow>
+                          );
+                        })}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                </Collapse>
+              )}
             </StyledCard>
 
             <Box display="flex" alignItems="center" gap={2} mb={4}>
