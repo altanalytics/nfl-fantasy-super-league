@@ -887,7 +887,7 @@ const [selectedWeek, setSelectedWeek] = useState(getDefaultWeek());
                         }
                       }}
                     >
-                      {[...Array(12)].map((_, i) => (
+                      {[...Array(16)].map((_, i) => (
                         <MenuItem key={i + 1} value={(i + 1).toString()}>
                           Week {i + 1}
                         </MenuItem>
