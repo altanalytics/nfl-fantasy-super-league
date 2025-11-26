@@ -154,7 +154,7 @@ export default function LeagueInfo() {
     const seasonStart = new Date(today.getFullYear(), 8, 4); // September is month 8 (0-based index)
     const diffInMs = today.getTime() - seasonStart.getTime();
     const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
-    const week = diffInDays < 0 ? 1 : Math.min(12, 1 + Math.floor(diffInDays / 7));
+    const week = diffInDays < 0 ? 1 : Math.min(16, 1 + Math.floor(diffInDays / 7));
     return week.toString();
   };
 
