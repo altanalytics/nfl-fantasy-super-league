@@ -100,7 +100,7 @@ function createResponse(statusCode: number, body: any): APIGatewayProxyResult {
     statusCode,
     headers: {
       'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET',
+      'Access-Control-Allow-Methods': 'GET, POST',
       'Access-Control-Allow-Headers': 'Content-Type',
       'Content-Type': 'application/json'
     },
@@ -115,7 +115,41 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
   const path = event.path || '';
 
   try {
-    if (path === '/teams') {
+    if (path === '/log-access') {
+      const body = event.body ? JSON.parse(event.body) : {};
+      const email = body.email;
+      const page = body.page || 'unknown';
+
+      if (!email) {
+        return createResponse(400, { error: 'Missing email' });
+      }
+
+      const timestamp = new Date().toISOString();
+      const date = timestamp.split('T')[0];
+      const logKey = `email_logs/${email}/${date}.jsonl`;
+
+      const logEntry = JSON.stringify({
+        email,
+        page,
+        timestamp,
+        userAgent: event.headers?.['User-Agent'] || 'unknown'
+      }) + '\n';
+
+      try {
+        await s3Client.send(new PutObjectCommand({
+          Bucket: BUCKET,
+          Key: logKey,
+          Body: logEntry,
+          ContentType: 'application/x-ndjson'
+        }));
+
+        return createResponse(200, { success: true });
+      } catch (error) {
+        console.error('Failed to log access:', error);
+        return createResponse(500, { error: 'Failed to log access' });
+      }
+
+    } else if (path === '/teams') {
       const csvContent = await getS3Object('bbr_teams.csv');
       let rows = parseCsv<TeamRow>(csvContent);
 

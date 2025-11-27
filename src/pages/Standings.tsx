@@ -13,6 +13,7 @@ import CardContent from '@mui/material/CardContent';
 import Paper from '@mui/material/Paper';
 import Chip from '@mui/material/Chip';
 import Avatar from '@mui/material/Avatar';
+import { usePageTracking } from '../utils/usePageTracking';
 import { styled } from '@mui/material/styles';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
@@ -103,6 +104,7 @@ const getLeagueGradient = (leagueId: string) => {
 };
 
 export default function Standings() {
+  usePageTracking('standings');
   const [league1, setLeague1] = useState([]);
   const [league2, setLeague2] = useState([]);
   

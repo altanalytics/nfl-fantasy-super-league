@@ -13,6 +13,7 @@ import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import Grid from '@mui/material/Grid';
 import Divider from '@mui/material/Divider';
+import { usePageTracking } from '../utils/usePageTracking';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -139,6 +140,7 @@ const PlayerRow = styled(Box)(({ theme, isBench }: { theme?: any; isBench: boole
 }));
 
 export default function LeagueInfo() {
+  usePageTracking('schedule');
   const [teams, setTeams] = useState([]);
   const [teamMap, setTeamMap] = useState({});
   const [selectedTeam, setSelectedTeam] = useState('ALL');

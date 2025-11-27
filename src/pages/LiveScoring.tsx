@@ -11,11 +11,13 @@ import imageHero from '../assets/landingPage.png'; // Adjust the path as necessa
 import PageShell from '../utils/Shell';
 import Markdown from 'markdown-to-jsx';
 import {liveScoring} from './liveScoringText'; // Adjust the path as necessary
+import { usePageTracking } from '../utils/usePageTracking';
 
 
 const teams = ['Team Alpha', 'Team Bravo', 'Team Chaos', 'Team Dynasty'];
 
 export default function LiveScoring() {
+  usePageTracking('live-scoring');
   const [selectedTeam, setSelectedTeam] = useState('All');
 
   return (

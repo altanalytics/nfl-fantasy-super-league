@@ -59,6 +59,12 @@ scoreboardResource.addMethod('GET', lambdaIntegration, {
   authorizationType: AuthorizationType.NONE,
 });
 
+// Add the /log-access resource
+const logAccessResource = nflRestApi.root.addResource('log-access');
+logAccessResource.addMethod('POST', lambdaIntegration, {
+  authorizationType: AuthorizationType.NONE,
+});
+
 // Add the API to outputs
 backend.addOutput({
   custom: {
